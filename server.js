@@ -3,20 +3,19 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
+var routes = require('./routes')
   , user = require('./routes/user')
   , tweet = require('./routes/tweet')
   , http = require('http')
   , path = require('path')
-  , app = require('http').createServer(handler)
+  , app = require('express').createServer()
   , io   = require('socket.io').listen(app)
   , fs	 = require('fs');
 
 app.listen(3000);
 
 function handler (req, res) {
-  fs.readFile(__dirname + '/index.html',
+  fs.readFile(__dirname + './static/index.html',
   function (err, data) {
     if (err) {
       res.writeHead(500);
@@ -28,9 +27,22 @@ function handler (req, res) {
   });
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-app.get('/tweet', tweet.getTweet);
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/static/index.html');
+});
+
+app.get('/js', function (req, res) {
+  res.sendfile(__dirname + '/static/js/');
+});
+
+app.get('/css', function (req, res) {
+  res.sendfile(__dirname + '/static/css');
+});
+
+
+//app.get('/', routes.index);
+//app.get('/users', user.list);
+//app.get('/tweet', tweet.getTweet);
 
 io.sockets.on('connection', function (socket) {
   socket.emit('sound', { channel: 0, note: 100, velocity: 127, delay: 0 });
