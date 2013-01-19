@@ -3,35 +3,50 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
+var routes = require('./routes')
   , user = require('./routes/user')
   , tweet = require('./routes/tweet')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , app = require('express').createServer()
+  , io   = require('socket.io').listen(app)
+  , fs	 = require('fs');
 
-var app = express();
+app.listen(3000);
 
-app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+function handler (req, res) {
+  fs.readFile(__dirname + './static/index.html',
+  function (err, data) {
+    if (err) {
+      res.writeHead(500);
+      return res.end('Error loading index.html');
+    }
+
+    res.writeHead(200);
+    res.end(data);
+  });
+}
+
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/static/index.html');
 });
 
-app.configure('development', function(){
-  app.use(express.errorHandler());
+app.get('/js', function (req, res) {
+  res.sendfile(__dirname + '/static/js/');
 });
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-app.get('/tweet', tweet.getTweet);
+app.get('/css', function (req, res) {
+  res.sendfile(__dirname + '/static/css');
+});
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+
+//app.get('/', routes.index);
+//app.get('/users', user.list);
+//app.get('/tweet', tweet.getTweet);
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('sound', { channel: 0, note: 100, velocity: 127, delay: 0 });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
