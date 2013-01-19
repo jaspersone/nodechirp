@@ -1,0 +1,232 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/************************************
+*   COLOR PALETTE                   *
+*************************************
+*                                   *
+*   47AED4  Blue                    *
+*                                   *
+************************************/
+
+/************************************
+*   Meyers Reset                    *
+************************************/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h6, h5, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,	
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+/* remember to define focus styles! */
+:focus {
+    outline: 0;
+}
+body {
+    line-height: 1;
+    color: black;
+    background: white;
+    position: relative;
+}
+ol, ul {
+    list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+caption, th, td {
+    text-align: left;
+    font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: "";
+}
+blockquote, q {
+    quotes: "" "";
+}
+
+button {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+label {
+    color: #666;
+    display: block;
+}
+
+/************************************
+*   Search Box                      *
+************************************/
+
+.content {
+    background: url("../Node_Example/images/bg_dashed.png") top left repeat;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    height: 800px;
+    width: 100%;
+}
+
+.search_area {
+    margin: 100px auto;
+    position: relative;
+    height: 260px;
+    width: 1000px;
+}
+
+.search_box {
+    background: rgba(41,171,226,1);
+/*     border: 30px solid #29ABE2; */
+    -webkit-border-radius: 130px;
+    -moz-border-radius: 130px;
+    border-radius: 130px;
+    float: left;
+    position: relative;
+    padding: 30px;
+    height: 200px;
+    width: 700px;
+    z-index: 100;
+}
+
+.search_box_input {
+    background: white;
+    border: none;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    border-radius: 150px;
+    color: rgba(237,30,121,.8);
+    font-weight: 900;
+    font-size: 60px;
+    padding: 80px;
+    height: 40px;
+    width: 540px;
+}
+
+.twitter_box {
+    cursor: pointer;
+    cursor: hand;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    margin: 40px 30px;
+    height: 180px;
+    width: 180px;
+}
+
+.twitter_logo {
+    background-image: url("../Node_Example/images/twitter-bird-light-bgs.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 360px 180px;
+    position: absolute;
+    left: 0;
+    height: 180px;
+    width: 360px;
+}
+
+.twitter_logo:hover {
+    left: -180px;
+}
+
+.pink_arrow {
+    background: url("../Node_Example/images/pink_arrow.png") bottom left no-repeat;
+    position: absolute;
+    bottom: 0;
+    right: 130px;
+    height: 80px;
+    width: 150px;
+    z-index: 90;
+}
+
+.equalizer {
+    bottom: 0;
+    margin: 0 auto;
+    height: 540px;
+    width: 1400px;
+}
+
+.note {
+    float: left;
+    position: relative;
+    height: 100%;
+    width: 100px;
+}
+
+.note:nth-of-type(2n+1) {
+    height: 80%;
+}
+
+.left_rail, .right_rail {
+    
+}
+
+.left_rail {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 50px;
+}
+
+.right_rail {
+    border-left: dashed 1px rgba(41,171,226,.8);
+    position: absolute;
+    height: 100%;
+    right: 0;
+    width: 49px;
+}
+
+.color_ball {
+    background: rgba(204,25,75,.8);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    position: absolute;
+    left: 25px;
+    top: -50px;
+    height: 50px;
+    width: 50px;
+}
+
+/************************************
+*   Default Style                   *
+************************************/
+
+.default-box-shadow {
+	-moz-box-shadow: 3px 5px 15px rgba(0,0,0,.5);
+	-webkit-box-shadow: 5px 3px 15px rgba(0, 0, 0, .5);
+	box-shadow: 3px 5px 15px rgba(0, 0, 0, .5);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=7, Direction=270, Color='#000')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=7, Direction=270, Color='#000');
+}
+
+::-webkit-input-placeholder {
+   color: rgba(237,30,121,.4);
+}
+
+:-moz-placeholder {  
+   color: rgba(237,30,121,.4);  
+}
+
+:-ms-input-placeholder {  
+   color: rgba(237,30,121,.4);  
+}
+
+
