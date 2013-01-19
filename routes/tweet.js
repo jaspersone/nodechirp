@@ -8,21 +8,13 @@ var twit = new twitter({
   access_token_secret: 'A2qXLgzu9qAc15aeg89yQ3NIxHc3g0TbAriLMM7k'
 });
 
-/*
-twit.stream('statuses/sample', function(stream) {
-  stream.on('data', function (data) {
-    //console.log(data);
-    console.log(data.text);
-  });
-});
-*/
-
 exports.getTweet = function (req, res) {
 
     var doProcessItem = true;
     var maxCount = 100;
     var count = 0;
     var longestWordLength = 0;
+    var longestWord = '';
     var wordCount = 0;
 
     ////
@@ -35,7 +27,8 @@ exports.getTweet = function (req, res) {
         'Content-Type': 'text/html'
     });
 
-    twit.stream('statuses/filter', { 'locations': '-74,40,-73,41' }, function (stream) {
+    //twit.stream('statuses/filter', { 'locations': '-74,40,-73,41' }, function (stream) {
+    twit.stream('statuses/sample', function (stream) {
         stream.on('data', function (data) {
             while (doProcessItem) {
                 console.log(data.text);
@@ -47,11 +40,12 @@ exports.getTweet = function (req, res) {
                 wordCount = twords.length;
                 console.log("Word Count: " + wordCount);
 
-                longestWordLength = 0;
                 twords.forEach(logArrayElements);
                 function logArrayElements(element, index, array) {
-                    if (element.length > longestWordLength)
-                        longestWordLength = element.length
+                    if (element.length > longestWordLength) {
+                        longestWordLength = element.length;
+                        longestWord = element;
+                    }
                 }
                 console.log("Longest Word: " + longestWordLength);
 
@@ -68,10 +62,13 @@ exports.getTweet = function (req, res) {
                     res.write("<BR \>");
                     res.write("Tweet Count: " + count);
                     res.write("<BR \>");
-                    res.write("Word Count: " + wordCount);
+                    res.write("Last Tweet Word Count: " + wordCount);
                     res.write("<BR \>");
-                    res.write("Longest Word: " + longestWordLength);
+                    res.write("Longest Word Length: " + longestWordLength);
                     res.write("<BR \>");
+                    res.write("Longest Word: " + longestWord);
+                    res.write("<BR \>");
+                    
                     res.end();
                     return;
                 }
