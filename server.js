@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , tweet = require('./routes/tweet')
   , http = require('http')
   , path = require('path')
   , app = require('http').createServer(handler)
@@ -26,6 +27,10 @@ function handler (req, res) {
     res.end(data);
   });
 }
+
+app.get('/', routes.index);
+app.get('/users', user.list);
+app.get('/tweet', tweet.getTweet);
 
 io.sockets.on('connection', function (socket) {
   socket.emit('sound', { channel: 0, note: 100, velocity: 127, delay: 0 });
