@@ -20,28 +20,65 @@ twit.stream('statuses/sample', function(stream) {
 exports.getTweet = function (req, res) {
 
     var doProcessItem = true;
-    var maxCount = 20;
+    var maxCount = 100;
     var count = 0;
-    twit.stream('statuses/sample', function (stream) {
+    var longestWordLength = 0;
+    var wordCount = 0;
+
+    ////
+    var startDate = new Date();
+    var endDate = new Date();
+    endDate.setSeconds(startDate.getSeconds() + 3);
+    ////
+
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+
+    twit.stream('statuses/filter', { 'locations': '-74,40,-73,41' }, function (stream) {
         stream.on('data', function (data) {
-            console.log(data.text);
-            res.write(data.text);
-            ++count;
-            if (!doProcessItem) {
-                res.end();
+            while (doProcessItem) {
+                console.log(data.text);
+                res.write(data.text);
+                res.write("<BR \>");
+                ++count;
+                console.log("Tweet Count: " + count);
+                var twords = data.text.split(" ");
+                wordCount = twords.length;
+                console.log("Word Count: " + wordCount);
+
+                longestWordLength = 0;
+                twords.forEach(logArrayElements);
+                function logArrayElements(element, index, array) {
+                    if (element.length > longestWordLength)
+                        longestWordLength = element.length
+                }
+                console.log("Longest Word: " + longestWordLength);
+
+                if (count > maxCount) {
+                    doProcessItem = false;
+                    res.end();
+                    return;
+                }
+                var curDate = new Date();
+                if (endDate < curDate) {
+                    doProcessItem = false;
+                    res.write("<BR \>");
+                    res.write("In 3 Seconds or less than 100 tweets");
+                    res.write("<BR \>");
+                    res.write("Tweet Count: " + count);
+                    res.write("<BR \>");
+                    res.write("Word Count: " + wordCount);
+                    res.write("<BR \>");
+                    res.write("Longest Word: " + longestWordLength);
+                    res.write("<BR \>");
+                    res.end();
+                    return;
+                }
                 return;
             }
         });
     });
 
-    res.writeHead(200, {
-        'Content-Type': 'text/html'
-    });
-    res.write('HELLO');
-
-    while (count < maxCount) {
-        if (count == maxCount) {
-            doProcessItem = false;
-        }
-    }
 }
+
